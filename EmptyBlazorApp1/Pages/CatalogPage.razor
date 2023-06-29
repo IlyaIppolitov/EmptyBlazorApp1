@@ -1,0 +1,40 @@
+﻿@page "/products"
+@inject ICatalog Catalog
+@inject ICurrentTime CurrentTime
+
+
+<h3>CatalogPage</h3>
+<table class="table">
+	<thead>
+		<tr>
+			<th>Наименование</th>
+			<th>Описание</th>
+			<th>Дата производства</th>
+			<th>Годен до</th>
+			<th>Цена, &#8381</th>
+			<th>Остаток</th>
+		</tr>
+	</thead>
+	<tbody>
+	@foreach (var product in products)
+	{
+		<tr>
+			<td>@product.Name</td>
+			<td>@product.Description</td>
+			<td>@product.ProducedAt</td>
+			<td>@product.ExpiredAt</td>
+			<td>@product.Price</td>
+			<td>@product.Stock</td>
+		</tr>
+	}
+	</tbody>
+</table>
+
+@code {
+	private List<Product>? products;
+
+	protected override async Task OnInitializedAsync()
+	{
+		products = await Catalog.GetProductsAsync(CurrentTime);
+	}
+}

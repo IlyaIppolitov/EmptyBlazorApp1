@@ -1,0 +1,21 @@
+﻿@page "/"
+
+<h1>Добро пожаловать в интернет магазин "БукваШоп". @now</h1>
+
+@code {
+
+	DateTime now;
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+		Task.Run(async() =>
+		{
+			while (true)
+			{
+				await Task.Delay(1000);
+				now = DateTime.Now;
+				await InvokeAsync(() => StateHasChanged());
+			}
+		});
+	}
+}
