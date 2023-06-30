@@ -1,21 +1,29 @@
 ﻿@page "/"
 
+@implements IDisposable
+
 <h1>Добро пожаловать в интернет магазин "БукваШоп". @now</h1>
 
 @code {
-
 	DateTime now;
+	private bool _disposed = false;
+
 	protected override void OnInitialized()
 	{
 		base.OnInitialized();
 		Task.Run(async() =>
 		{
-			while (true)
+			while (!_disposed)
 			{
 				await Task.Delay(1000);
 				now = DateTime.Now;
 				await InvokeAsync(() => StateHasChanged());
 			}
 		});
+	}
+
+	public void Dispose()
+	{
+		_disposed = true;
 	}
 }
